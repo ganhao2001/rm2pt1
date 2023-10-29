@@ -1,0 +1,201 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.rm2pt.prototype</groupId>
+	<artifactId>com.rm2pt.prototype.bookborrowprototype</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	
+	
+	 <properties>
+        <jpro.version>2021.2.1</jpro.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>15</javafx.version>
+        <testfx.version>4.0.16-alpha</testfx.version>
+    </properties>
+	
+	
+	<build>
+		<sourceDirectory>src-gen</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src-gen</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration> 
+					<source>11</source>
+					<target>11</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src-gen</directory>
+							<includes>
+								<include>**/*.java</include>
+								<include>**/*.fxml</include>
+								<include>**/*.css</include>
+								<include>**/*.fxgraph</include>
+							</includes>
+							<excludes>
+								<exclude>**/MainTest.java</exclude>
+								<exclude>**/ThirdPartyServices.java</exclude>
+								<exclude>**/ThirdPartyServicesImpl.java</exclude>
+							</excludes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+						
+			<!-- <plugin> <groupId>org.eclipse.xtext</groupId> <artifactId>xtext-maven-plugin</artifactId> 
+				<version>2.15.0</version> <executions> <execution> <goals> <goal>generate</goal> 
+				</goals> </execution> </executions> <configuration> <languages> <language> 
+				<setup>net.mydreamy.requirementmodel.REMODELStandaloneSetup</setup> <outputConfigurations> 
+				<outputConfiguration> <outputDirectory>src-gen</outputDirectory> </outputConfiguration> 
+				</outputConfigurations> </language> </languages> </configuration> <dependencies> 
+				<dependency> <groupId>net.mydreamy.requirementmodel</groupId> <artifactId>net.mydreamy.requirementmodel</artifactId> 
+				<version>1.0.1-SNAPSHOT</version> </dependency> </dependencies> </plugin> -->
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>gui.Main</mainClass>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<test>gui.MainTest#integrationTest</test>
+				</configuration>
+			</plugin>
+			
+	 		<plugin>
+		          <groupId>com.sandec.jpro</groupId>
+		          <artifactId>jpro-maven-plugin</artifactId>
+		          <version>${jpro.version}</version>
+		          <configuration>
+		              <visible>false</visible>
+		              <JVMArgs>
+		                  <!-- <JVMArg>your-args</JVMArg> -->
+		              </JVMArgs>
+		              <mainClassName>gui.Main</mainClassName>
+		              <openingPath>/</openingPath>
+		          </configuration>
+		      </plugin>
+		</plugins>
+	</build>
+
+   <pluginRepositories>
+        <pluginRepository>
+            <id>jpro - sandec repository</id>
+            <url>https://sandec.jfrog.io/artifactory/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <repositories>
+        <repository>
+            <id>jpro - sandec repository</id>
+            <url>https://sandec.jfrog.io/artifactory/repo</url>
+        </repository>
+    </repositories>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.testfx</groupId>
+			<artifactId>testfx-core</artifactId>
+			<version>${testfx.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testfx</groupId>
+			<artifactId>openjfx-monocle</artifactId>
+			<version>jdk-11+26</version> <!-- jdk-9+181 for Java 9, jdk-11+26 for Java 11 -->
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13-beta-3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testfx</groupId>
+			<artifactId>testfx-junit</artifactId> <!-- or testfx-junit5 -->
+			<version>4.0.15-alpha</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kordamp.bootstrapfx</groupId>
+			<artifactId>bootstrapfx-core</artifactId>
+			<version>0.2.4</version>
+		</dependency>
+  		<dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>${javafx.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>${javafx.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>${javafx.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sandec.jpro</groupId>
+            <artifactId>jpro-webapi</artifactId>
+            <version>${jpro.version}</version>
+            <scope>compile</scope>
+        </dependency>	
+</dependencies>
+
+</project>
+

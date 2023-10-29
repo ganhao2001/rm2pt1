@@ -1,0 +1,667 @@
+UseCaseModel BookBorrow {
+
+	UC::register definedBySSD(RegisterSSD) relatedService(RegisterService)
+	UC::login definedBySSD(LoginSSD) relatedService(LoginService)
+	UC::searchBook include login definedBySSD(SearchBookSSD) relatedService(SearchBookService)
+	UC::borrowBook include login definedBySSD(BorrowBookSSD) relatedService(BorrowBookService)
+	UC::returnBook include borrowBook definedBySSD(ReturnBookSSD) relatedService(ReturnBookService)
+
+	Actor Customer {
+		register
+		login
+		searchBook
+		borrowBook
+	}
+
+	Actor Librarian {
+		returnBook
+	}
+
+	Interaction RegisterSSD {
+
+		[Participants: Customer RegisterService]
+
+		CallMessage::RegisterSSDCallMessage1(inputUser RegisterSSDCallMessage1SendingEnd -> RegisterSSDExecution1StartEnd)
+		ReturnMessage::InformationVerification(RegisterSSDExecution1FinishEnd -> RegisterSSDCallMessage1ReturnReceivingEnd RegisterSSDCallMessage1)
+		CallMessage::RegisterSSDCallMessage3(verification RegisterSSDCallMessage3SendingEnd -> RegisterSSDExecution2StartEnd)
+		ReturnMessage::RegisterSSDCallMessage3Rerurn(RegisterSSDExecution2FinishEnd -> RegisterSSDCallMessage3ReturnReceivingEnd RegisterSSDCallMessage3)
+
+		Execution::RegisterSSDExecution1(RegisterService RegisterSSDExecution1StartEnd RegisterSSDExecution1FinishEnd)
+		Execution::RegisterSSDExecution2(RegisterService RegisterSSDExecution2StartEnd RegisterSSDExecution2FinishEnd)
+
+		MessageEnd::RegisterSSDCallMessage1SendingEnd(Customer RegisterSSDCallMessage1)
+		ExecutionEnd::RegisterSSDExecution1StartEnd(RegisterService RegisterSSDExecution1)
+		ExecutionEnd::RegisterSSDExecution1FinishEnd(RegisterService RegisterSSDExecution1)
+		MessageEnd::RegisterSSDCallMessage1ReturnReceivingEnd(Customer InformationVerification)
+		MessageEnd::RegisterSSDCallMessage3SendingEnd(Customer RegisterSSDCallMessage3)
+		ExecutionEnd::RegisterSSDExecution2StartEnd(RegisterService RegisterSSDExecution2)
+		ExecutionEnd::RegisterSSDExecution2FinishEnd(RegisterService RegisterSSDExecution2)
+		MessageEnd::RegisterSSDCallMessage3ReturnReceivingEnd(Customer RegisterSSDCallMessage3Rerurn)
+
+	}
+
+	Interaction LoginSSD {
+
+		[Participants: Customer LoginService]
+
+		CallMessage::LoginSSDCallMessage1(inputUsername LoginSSDCallMessage1SendingEnd -> LoginSSDExecution1StartEnd)
+		ReturnMessage::LoginSSDCallMessage1Return(LoginSSDExecution1FinishEnd -> LoginSSDCallMessage1ReturnReceivingEnd LoginSSDCallMessage1)
+		CallMessage::LoginSSDCallMessage3(inputPassword LoginSSDCallMessage3SendingEnd -> LoginSSDExecution2StartEnd)
+		ReturnMessage::LoginSSDCallMessage3Return(LoginSSDExecution2FinishEnd -> LoginSSDCallMessage3ReturnReceivingEnd LoginSSDCallMessage3)
+
+		Execution::LoginSSDExecution1(LoginService LoginSSDExecution1StartEnd LoginSSDExecution1FinishEnd)
+		Execution::LoginSSDExecution2(LoginService LoginSSDExecution2StartEnd LoginSSDExecution2FinishEnd)
+
+		MessageEnd::LoginSSDCallMessage1SendingEnd(Customer LoginSSDCallMessage1)
+		ExecutionEnd::LoginSSDExecution1StartEnd(LoginService LoginSSDExecution1)
+		ExecutionEnd::LoginSSDExecution1FinishEnd(LoginService LoginSSDExecution1)
+		MessageEnd::LoginSSDCallMessage1ReturnReceivingEnd(Customer LoginSSDCallMessage1Return)
+		MessageEnd::LoginSSDCallMessage3SendingEnd(Customer LoginSSDCallMessage3)
+		ExecutionEnd::LoginSSDExecution2StartEnd(LoginService LoginSSDExecution2)
+		ExecutionEnd::LoginSSDExecution2FinishEnd(LoginService LoginSSDExecution2)
+		MessageEnd::LoginSSDCallMessage3ReturnReceivingEnd(Customer LoginSSDCallMessage3Return)
+
+	}
+
+	Interaction SearchBookSSD {
+
+		[Participants: Customer SearchBookService]
+
+		CallMessage::SearchBookSSDCallMessage1(login SearchBookSSDCallMessage1SendingEnd -> SearchBookSSDExecution1StartEnd)
+		ReturnMessage::SearchBookSSDCallMessage1Return(SearchBookSSDExecution1FinishEnd -> SearchBookSSDCallMessage1ReturnReceivingEnd SearchBookSSDCallMessage1)
+		CallMessage::SearchBookSSDCallMessage3(inputtitle SearchBookSSDCallMessage3SendingEnd -> SearchBookSSDExecution2StartEnd)
+		ReturnMessage::SearchBookSSDCallMessage3Return(SearchBookSSDExecution2FinishEnd -> SearchBookSSDCallMessage3ReturnReceivingEnd SearchBookSSDCallMessage3)
+		CallMessage::SearchBookSSDCallMessage5(brows SearchBookSSDCallMessage5SendingEnd -> SearchBookSSDExecution3StartEnd)
+		ReturnMessage::SearchBookSSDCallMessage5Return(SearchBookSSDExecution3FinishEnd -> SearchBookSSDCallMessage5ReturnReceivingEnd SearchBookSSDCallMessage5)
+		CallMessage::SearchBookSSDCallMessage7(selectbook SearchBookSSDCallMessage7SendingEnd -> SearchBookSSDExecution4StartEnd)
+		ReturnMessage::SearchBookSSDCallMessage7Return(SearchBookSSDExecution4FinishEnd -> SearchBookSSDCallMessage7ReturnReceivingEnd SearchBookSSDCallMessage7)
+
+		Execution::SearchBookSSDExecution1(SearchBookService SearchBookSSDExecution1StartEnd SearchBookSSDExecution1FinishEnd)
+		Execution::SearchBookSSDExecution2(SearchBookService SearchBookSSDExecution2StartEnd SearchBookSSDExecution2FinishEnd)
+		Execution::SearchBookSSDExecution3(SearchBookService SearchBookSSDExecution3StartEnd SearchBookSSDExecution3FinishEnd)
+		Execution::SearchBookSSDExecution4(SearchBookService SearchBookSSDExecution4StartEnd SearchBookSSDExecution4FinishEnd)
+
+		MessageEnd::SearchBookSSDCallMessage1SendingEnd(Customer SearchBookSSDCallMessage1)
+		ExecutionEnd::SearchBookSSDExecution1StartEnd(SearchBookService SearchBookSSDExecution1)
+		ExecutionEnd::SearchBookSSDExecution1FinishEnd(SearchBookService SearchBookSSDExecution1)
+		MessageEnd::SearchBookSSDCallMessage1ReturnReceivingEnd(Customer SearchBookSSDCallMessage1Return)
+		MessageEnd::SearchBookSSDCallMessage3SendingEnd(Customer SearchBookSSDCallMessage3)
+		ExecutionEnd::SearchBookSSDExecution2StartEnd(SearchBookService SearchBookSSDExecution2)
+		ExecutionEnd::SearchBookSSDExecution2FinishEnd(SearchBookService SearchBookSSDExecution2)
+		MessageEnd::SearchBookSSDCallMessage3ReturnReceivingEnd(Customer SearchBookSSDCallMessage3Return)
+		MessageEnd::SearchBookSSDCallMessage5SendingEnd(Customer SearchBookSSDCallMessage5)
+		ExecutionEnd::SearchBookSSDExecution3StartEnd(SearchBookService SearchBookSSDExecution3)
+		ExecutionEnd::SearchBookSSDExecution3FinishEnd(SearchBookService SearchBookSSDExecution3)
+		MessageEnd::SearchBookSSDCallMessage5ReturnReceivingEnd(Customer SearchBookSSDCallMessage5Return)
+		MessageEnd::SearchBookSSDCallMessage7SendingEnd(Customer SearchBookSSDCallMessage7)
+		ExecutionEnd::SearchBookSSDExecution4StartEnd(SearchBookService SearchBookSSDExecution4)
+		ExecutionEnd::SearchBookSSDExecution4FinishEnd(SearchBookService SearchBookSSDExecution4)
+		MessageEnd::SearchBookSSDCallMessage7ReturnReceivingEnd(Customer SearchBookSSDCallMessage7Return)
+
+	}
+
+	Interaction BorrowBookSSD {
+
+		[Participants: Customer BorrowBookService]
+
+		CallMessage::BorrowBookSSDCallMessage1(choosebook BorrowBookSSDCallMessage1SendingEnd -> BorrowBookSSDExecution1StartEnd)
+		ReturnMessage::BorrowBookSSDCallMessage1Return(BorrowBookSSDExecution1FinishEnd -> BorrowBookSSDCallMessage1ReturnReceivingEnd BorrowBookSSDCallMessage1)
+		CallMessage::BorrowBookSSDCallMessage3(selecttime BorrowBookSSDCallMessage3SendingEnd -> BorrowBookSSDExecution2StartEnd)
+		ReturnMessage::BorrowBookSSDCallMessage3Return(BorrowBookSSDExecution2FinishEnd -> BorrowBookSSDCallMessage3ReturnReceivingEnd BorrowBookSSDCallMessage3)
+		CallMessage::BorrowBookSSDCallMessage5(confirm BorrowBookSSDCallMessage5SendingEnd -> BorrowBookSSDExecution3StartEnd)
+		ReturnMessage::BorrowBookSSDCallMessage5Return(BorrowBookSSDExecution3FinishEnd -> BorrowBookSSDCallMessage5ReturnReceivingEnd BorrowBookSSDCallMessage5)
+
+		Execution::BorrowBookSSDExecution1(BorrowBookService BorrowBookSSDExecution1StartEnd BorrowBookSSDExecution1FinishEnd)
+		Execution::BorrowBookSSDExecution2(BorrowBookService BorrowBookSSDExecution2StartEnd BorrowBookSSDExecution2FinishEnd)
+		Execution::BorrowBookSSDExecution3(BorrowBookService BorrowBookSSDExecution3StartEnd BorrowBookSSDExecution3FinishEnd)
+
+		MessageEnd::BorrowBookSSDCallMessage1SendingEnd(Customer BorrowBookSSDCallMessage1)
+		ExecutionEnd::BorrowBookSSDExecution1StartEnd(BorrowBookService BorrowBookSSDExecution1)
+		ExecutionEnd::BorrowBookSSDExecution1FinishEnd(BorrowBookService BorrowBookSSDExecution1)
+		MessageEnd::BorrowBookSSDCallMessage1ReturnReceivingEnd(Customer BorrowBookSSDCallMessage1Return)
+		MessageEnd::BorrowBookSSDCallMessage3SendingEnd(Customer BorrowBookSSDCallMessage3)
+		ExecutionEnd::BorrowBookSSDExecution2StartEnd(BorrowBookService BorrowBookSSDExecution2)
+		ExecutionEnd::BorrowBookSSDExecution2FinishEnd(BorrowBookService BorrowBookSSDExecution2)
+		MessageEnd::BorrowBookSSDCallMessage3ReturnReceivingEnd(Customer BorrowBookSSDCallMessage3Return)
+		MessageEnd::BorrowBookSSDCallMessage5SendingEnd(Customer BorrowBookSSDCallMessage5)
+		ExecutionEnd::BorrowBookSSDExecution3StartEnd(BorrowBookService BorrowBookSSDExecution3)
+		ExecutionEnd::BorrowBookSSDExecution3FinishEnd(BorrowBookService BorrowBookSSDExecution3)
+		MessageEnd::BorrowBookSSDCallMessage5ReturnReceivingEnd(Customer BorrowBookSSDCallMessage5Return)
+
+	}
+
+	Interaction ReturnBookSSD {
+
+		[Participants: Librarian ReturnBookService]
+
+		CallMessage::ReturnBookSSDCallMessage1(inputuser ReturnBookSSDCallMessage1SendingEnd -> ReturnBookSSDExecution1StartEnd)
+		ReturnMessage::ReturnBookSSDCallMessage1Return(ReturnBookSSDExecution1FinishEnd -> ReturnBookSSDCallMessage1ReturnReceivingEnd ReturnBookSSDCallMessage1)
+		CallMessage::ReturnBookSSDCallMessage3(inputbook ReturnBookSSDCallMessage3SendingEnd -> ReturnBookSSDExecution2StartEnd)
+		ReturnMessage::ReturnBookSSDCallMessage3Return(ReturnBookSSDExecution2FinishEnd -> ReturnBookSSDCallMessage3ReturnReceivingEnd ReturnBookSSDCallMessage3)
+		CallMessage::ReturnBookSSDCallMessage5(confirminformation ReturnBookSSDCallMessage5SendingEnd -> ReturnBookSSDExecution3StartEnd)
+		ReturnMessage::ReturnBookSSDCallMessage5Return(ReturnBookSSDExecution3FinishEnd -> ReturnBookSSDCallMessage5ReturnReceivingEnd ReturnBookSSDCallMessage5)
+
+		Execution::ReturnBookSSDExecution1(ReturnBookService ReturnBookSSDExecution1StartEnd ReturnBookSSDExecution1FinishEnd)
+		Execution::ReturnBookSSDExecution2(ReturnBookService ReturnBookSSDExecution2StartEnd ReturnBookSSDExecution2FinishEnd)
+		Execution::ReturnBookSSDExecution3(ReturnBookService ReturnBookSSDExecution3StartEnd ReturnBookSSDExecution3FinishEnd)
+
+		MessageEnd::ReturnBookSSDCallMessage1SendingEnd(Librarian ReturnBookSSDCallMessage1)
+		ExecutionEnd::ReturnBookSSDExecution1StartEnd(ReturnBookService ReturnBookSSDExecution1)
+		ExecutionEnd::ReturnBookSSDExecution1FinishEnd(ReturnBookService ReturnBookSSDExecution1)
+		MessageEnd::ReturnBookSSDCallMessage1ReturnReceivingEnd(Librarian ReturnBookSSDCallMessage1Return)
+		MessageEnd::ReturnBookSSDCallMessage3SendingEnd(Librarian ReturnBookSSDCallMessage3)
+		ExecutionEnd::ReturnBookSSDExecution2StartEnd(ReturnBookService ReturnBookSSDExecution2)
+		ExecutionEnd::ReturnBookSSDExecution2FinishEnd(ReturnBookService ReturnBookSSDExecution2)
+		MessageEnd::ReturnBookSSDCallMessage3ReturnReceivingEnd(Librarian ReturnBookSSDCallMessage3Return)
+		MessageEnd::ReturnBookSSDCallMessage5SendingEnd(Librarian ReturnBookSSDCallMessage5)
+		ExecutionEnd::ReturnBookSSDExecution3StartEnd(ReturnBookService ReturnBookSSDExecution3)
+		ExecutionEnd::ReturnBookSSDExecution3FinishEnd(ReturnBookService ReturnBookSSDExecution3)
+		MessageEnd::ReturnBookSSDCallMessage5ReturnReceivingEnd(Librarian ReturnBookSSDCallMessage5Return)
+
+	}
+
+	Service BookBorrowSystem {
+
+	}
+
+	Service ThirdPartyServices {
+
+	}
+
+	Service RegisterService {
+
+		[Operation]
+		inputUser(username, password, email)
+		verification(code)
+
+		[TempProperty]
+		Vcode : String
+		User : User
+
+	}
+
+	Service LoginService {
+
+		[Operation]
+		inputUsername(name)
+		inputPassword(password)
+
+		[TempProperty]
+		Username : String
+		User : User
+
+	}
+
+	Service SearchBookService {
+
+		[Operation]
+		login(username, password)
+		inputtitle(title)
+		brows()
+		selectbook(bookid)
+
+		[TempProperty]
+		Book : Book
+
+	}
+
+	Service BorrowBookService {
+
+		[Operation]
+		choosebook(bookid)
+		selecttime(time)
+		confirm()
+
+	}
+
+	Service ReturnBookService {
+
+		[Operation]
+		inputuser(username)
+		inputbook(bookname)
+		confirminformation()
+
+	}
+
+	Service ManageUserCRUDService {
+
+		[Operation]
+		createUser(userid, username, password, mailbox, userstatus)
+		queryUser(userid)
+		modifyUser(userid, username, password, mailbox, userstatus)
+		deleteUser(userid)
+
+	}
+
+	Service ManageBookCRUDService {
+
+		[Operation]
+		createBook(bookid, booktitle, authors, bookstatus)
+		queryBook(bookid)
+		modifyBook(bookid, booktitle, authors, bookstatus)
+		deleteBook(bookid)
+
+	}
+
+	Service ManageBookBorrowCRUDService {
+
+		[Operation]
+		createBookBorrow(id, userid, bookid, borrowtime, returntime, borrowstatus)
+		queryBookBorrow(id)
+		modifyBookBorrow(id, userid, bookid, borrowtime, returntime, borrowstatus)
+		deleteBookBorrow(id)
+
+	}
+
+	Contract RegisterService::inputUser(username : String, password : String, email : String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(ban:User | ban.Username = username)
+
+		precondition:
+			user.oclIsUndefined() = true
+		postcondition:
+			let ban:User in
+			ban.oclIsNew() and
+			ban.UserId = 1214 and
+			ban.Username = username and
+			ban.Password = password and
+			ban.Mailbox = email and
+			self.User = ban and
+			self.Vcode = "111" and
+			result = true
+
+	}
+
+	Contract RegisterService::verification(code : String) : Boolean {
+
+		definition:
+			user:User = self.User
+
+		precondition:
+			true
+		postcondition:
+			if
+				(self.Vcode = code)
+			then
+				User.allInstance()->includes(user) and
+				result = true
+			else
+				result = false
+			endif
+	}
+
+	Contract LoginService::inputUsername(name : String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(ban:User | ban.Username = name)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			self.Username = name and
+			result = true
+	}
+
+	Contract LoginService::inputPassword(password : String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(ban:User | ban.Username = self.Username)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			if
+				user.Password = password
+			then
+				self.User = user and
+				result = true
+			else
+				result = false
+			endif
+	}
+
+	Contract SearchBookService::login(username : String, password : String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(ban:User | ban.Username = username)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			if
+				user.Password = password
+			then
+				result = true
+			else
+				result = false
+			endif
+	}
+
+	Contract SearchBookService::inputtitle(title : String) : Boolean {
+
+		definition:
+			book:Book = Book.allInstance()->any(ban:Book | ban.Booktitle = title)
+
+		precondition:
+			book.oclIsUndefined() = false
+		postcondition:
+			self.Book = book and
+			result = true
+	}
+
+	Contract SearchBookService::brows() : Boolean {
+
+		precondition:
+			true
+		postcondition:
+			result = true
+	}
+
+	Contract SearchBookService::selectbook(bookid : Integer) : Book {
+
+		definition:
+			book:Book = Book.allInstance()->any(ban:Book | ban.BookId = bookid)
+
+		precondition:
+			book.oclIsUndefined() = false
+		postcondition:
+			if
+				bookid = self.Book.BookId
+			then
+				result = self.Book
+			else
+				result = null
+			endif
+	}
+
+	Contract BorrowBookService::choosebook(bookid : Integer) : Boolean {
+
+		definition:
+			book:Book = Book.allInstance()->any(ban:Book | ban.BookId = bookid)
+
+		precondition:
+			book.oclIsUndefined() = false
+		postcondition:
+			result = true
+	}
+
+	Contract BorrowBookService::selecttime(time : Date) : Boolean {
+
+		precondition:
+			true
+		postcondition:
+			result = true
+	}
+
+	Contract BorrowBookService::confirm() : Boolean {
+
+		precondition:
+			true
+		postcondition:
+			result = true
+	}
+
+	Contract ReturnBookService::inputuser(username : String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(ban:User | ban.Username = username)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			result = true
+	}
+
+	Contract ReturnBookService::inputbook(bookname : String) : Boolean {
+
+		definition:
+			book:Book = Book.allInstance()->any(ban:Book | ban.Booktitle = bookname)
+
+		precondition:
+			book.oclIsUndefined() = false
+		postcondition:
+			result = true
+	}
+
+	Contract ReturnBookService::confirminformation() : Boolean {
+
+		precondition:
+			true
+		postcondition:
+			result = true
+	}
+
+	Contract ManageUserCRUDService::createUser(userid : Integer, username : String, password : String, mailbox : String, userstatus : UserStatus[LEGAL|ILLEGAL|UNRELIABLE]) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(ban:User | ban.UserId = userid)
+
+		precondition:
+			user.oclIsUndefined() = true
+		postcondition:
+			let ban:User in
+			ban.oclIsNew() and
+			ban.UserId = userid and
+			ban.Username = username and
+			ban.Password = password and
+			ban.Mailbox = mailbox and
+			ban.UserStatus = userstatus and
+			User.allInstance()->includes(ban) and
+			result = true
+	}
+
+	Contract ManageUserCRUDService::queryUser(userid : Integer) : User {
+
+		definition:
+			user:User = User.allInstance()->any(ban:User | ban.UserId = userid)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			result = user
+	}
+
+	Contract ManageUserCRUDService::modifyUser(userid : Integer, username : String, password : String, mailbox : String, userstatus : UserStatus[LEGAL|ILLEGAL|UNRELIABLE]) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(ban:User | ban.UserId = userid)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			user.UserId = userid and
+			user.Username = username and
+			user.Password = password and
+			user.Mailbox = mailbox and
+			user.UserStatus = userstatus and
+			result = true
+	}
+
+	Contract ManageUserCRUDService::deleteUser(userid : Integer) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(ban:User | ban.UserId = userid)
+
+		precondition:
+			user.oclIsUndefined() = false and
+			User.allInstance()->includes(user)
+		postcondition:
+			User.allInstance()->excludes(user) and
+			result = true
+	}
+
+	Contract ManageBookCRUDService::createBook(bookid : Integer, booktitle : String, authors : String, bookstatus : BookStatus[BORROWED|STOCKED]) : Boolean {
+
+		definition:
+			book:Book = Book.allInstance()->any(ban:Book | ban.BookId = bookid)
+
+		precondition:
+			book.oclIsUndefined() = true
+		postcondition:
+			let ban:Book in
+			ban.oclIsNew() and
+			ban.BookId = bookid and
+			ban.Booktitle = booktitle and
+			ban.Authors = authors and
+			ban.BookStatus = bookstatus and
+			Book.allInstance()->includes(ban) and
+			result = true
+	}
+
+	Contract ManageBookCRUDService::queryBook(bookid : Integer) : Book {
+
+		definition:
+			book:Book = Book.allInstance()->any(ban:Book | ban.BookId = bookid)
+
+		precondition:
+			book.oclIsUndefined() = false
+		postcondition:
+			result = book
+	}
+
+	Contract ManageBookCRUDService::deleteBook(bookid : Integer) : Boolean {
+
+		definition:
+			book:Book = Book.allInstance()->any(ban:Book | ban.BookId = bookid)
+
+		precondition:
+			book.oclIsUndefined() = false and
+			Book.allInstance()->includes(book)
+		postcondition:
+			Book.allInstance()->excludes(book) and
+			result = true
+	}
+
+	Contract ManageBookCRUDService::modifyBook(bookid : Integer, booktitle : String, authors : String, bookstatus : BookStatus[BORROWED|STOCKED]) : Boolean {
+
+		definition:
+			book:Book = Book.allInstance()->any(ban:Book | ban.BookId = bookid)
+
+		precondition:
+			book.oclIsUndefined() = false
+		postcondition:
+			book.BookId = bookid and
+			book.Booktitle = booktitle and
+			book.Authors = authors and
+			book.BookStatus = bookstatus and
+			result = true
+	}
+
+	Contract ManageBookBorrowCRUDService::createBookBorrow(id : Integer, userid : Integer, bookid : Integer, borrowtime : Date, returntime : Date, borrowstatus : BorrowStatus[BORROWED|RETURNED|TIMEOUT]) : Boolean {
+
+		definition:
+			bookborrow:BookBorrow = BookBorrow.allInstance()->any(ban:BookBorrow | ban.Id = id)
+
+		precondition:
+			bookborrow.oclIsUndefined() = true
+		postcondition:
+			let ban:BookBorrow in
+			ban.oclIsNew() and
+			ban.Id = id and
+			ban.Userid = userid and
+			ban.Bookid = bookid and
+			ban.BorrowTime = borrowtime and
+			ban.ReturnTime = returntime and
+			ban.BorrowStatus = borrowstatus and
+			BookBorrow.allInstance()->includes(ban) and
+			result = true
+	}
+
+	Contract ManageBookBorrowCRUDService::queryBookBorrow(id : Integer) : BookBorrow {
+
+		definition:
+			bookborrow:BookBorrow = BookBorrow.allInstance()->any(ban:BookBorrow | ban.Id = id)
+
+		precondition:
+			bookborrow.oclIsUndefined() = false
+		postcondition:
+			result = bookborrow
+	}
+
+	Contract ManageBookBorrowCRUDService::deleteBookBorrow(id : Integer) : Boolean {
+
+		definition:
+			bookborrow:BookBorrow = BookBorrow.allInstance()->any(ban:BookBorrow | ban.Id = id)
+
+		precondition:
+			bookborrow.oclIsUndefined() = false and
+			BookBorrow.allInstance()->includes(bookborrow)
+		postcondition:
+			BookBorrow.allInstance()->excludes(bookborrow) and
+			result = true
+	}
+
+	Contract ManageBookBorrowCRUDService::modifyBookBorrow(id : Integer, userid : Integer, bookid : Integer, borrowtime : Date, returntime : Date, borrowstatus : BorrowStatus[BORROWED|RETURNED|TIMEOUT]) : Boolean {
+
+		definition:
+			bookborrow:BookBorrow = BookBorrow.allInstance()->any(ban:BookBorrow | ban.Id = id)
+
+		precondition:
+			bookborrow.oclIsUndefined() = false
+		postcondition:
+			bookborrow.Id = id and
+			bookborrow.Userid = userid and
+			bookborrow.Bookid = bookid and
+			bookborrow.BorrowTime = borrowtime and
+			bookborrow.ReturnTime = returntime and
+			bookborrow.BorrowStatus = borrowstatus and
+			result = true
+	}
+
+}
+
+DomainModel BookBorrow {
+
+	@AutoCRUD Entity User {
+		UserId : Integer
+		Username : String
+		Password : String
+		Mailbox : String
+		UserStatus : UserStatus[LEGAL|ILLEGAL|UNRELIABLE]
+
+		[Refer]
+		UsertoBookBorrow : BookBorrow* Association
+		UsertoVerificationCode : VerificationCode Association
+	}
+
+	@AutoCRUD Entity Book {
+		BookId : Integer
+		Booktitle : String
+		Authors : String
+		BookStatus : BookStatus[BORROWED|STOCKED]
+
+		[Refer]
+		BooktoBookBorrow : BookBorrow ! Association
+	}
+
+	@AutoCRUD Entity BookBorrow {
+		Id : Integer
+		Userid : Integer
+		Bookid : Integer
+		BorrowTime : Date
+		ReturnTime : Date
+		BorrowStatus : BorrowStatus[BORROWED|RETURNED|TIMEOUT]
+
+		[Refer]
+		BookBorrowtoUser : User ! Association
+		BookBorrowtoBook : Book Association
+		BookBorrowtoLibrarian : Librarian Association
+	}
+
+	Entity Librarian {
+		Id : Integer
+		Username : String
+		Password : String
+
+		[Refer]
+		LibrariantoBookBorrow : BookBorrow* ! Association
+	}
+
+	Entity VerificationCode {
+		Mailbox : String
+		Code : String
+	}
+
+}
+

@@ -1,0 +1,104 @@
+TitledPane {
+	-fx-collapsible: false
+}
+
+#leftAccordion TitledPane {
+	-fx-collapsible: true
+}
+
+#execute {
+	-fx-max-width: Infinity
+} 
+
+#reset {
+	-fx-max-width: Infinity
+} 
+
+#operation_paras GridPane {
+	-fx-alignment: center 
+}
+
+#operation_paras TextField {
+	-fx-pref-width: 400; 
+}
+
+#operation_return_pane {
+	-fx-max-height: Infinity
+}
+
+#status_left_pane_class {
+	
+	-fx-pref-height: 600;
+	-fx-max-height: Infinity
+}
+
+#class_statisic {
+	-fx-pref-width: 700;
+}
+
+#classname {
+	-fx-pref-width:  400;
+	-fx-alignment: center
+}
+
+#num_objects {
+	-fx-pref-width: 300;
+	-fx-alignment: center
+}
+
+#association_statisic .table-column {
+	-fx-pref-width: 140;
+	-fx-alignment: center
+}
+
+#object_statics {
+	-fx-pref-width:  800;
+}
+
+#object_statics .table-column {
+  -fx-alignment: center;
+}
+
+.TreeTableColumn {
+	-fx-pref-width: 75
+}
+
+#invariant_pane {
+	-fx-pref-width: 400;
+	-fx-max-height: Infinity
+}
+
+#invariants_panes VBox {
+	-fx-spacing: 8;
+}
+
+
+#all_invariant_pane {
+	-fx-max-height: Infinity;
+}
+
+#all_invariant_pane VBox {
+    -fx-spacing: 8;
+}
+
+#definition_pane {
+	-fx-pref-width: 400;
+	-fx-pref-height: 200;
+}
+
+#precondition_pane {
+	-fx-max-height: Infinity
+}
+
+#postcondition_pane {
+	-fx-max-height: Infinity
+}
+
+#invariants_panes {
+	-fx-max-height: Infinity
+}
+
+#log {
+	-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00; 
+}
+

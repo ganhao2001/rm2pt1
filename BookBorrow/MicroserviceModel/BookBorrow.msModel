@@ -1,0 +1,104 @@
+MicroServiceModel BookBorrow {
+	MicroService CustomerService {
+		ProvidedInterface borrowBook{
+			[Operation]
+			borrowBook
+		}
+		ProvidedInterface searchBook{
+			[Operation]
+			searchBook
+		}
+		ProvidedInterface manageBookBorrow{
+			[Operation]
+			createBookBorrow
+			queryBookBorrow
+			updateBookBorrow
+			modifyBookBorrow
+		}
+		RequiredInterface manageUser
+		RequiredInterface manageBook
+		DomainModel CustomerService {
+			@AutoCRUD Entity BookBorrow {
+				Id : Integer
+				Userid : Integer
+				Bookid : Integer
+				BorrowTime : Date
+				ReturnTime : Date
+				BorrowStatus : Integer
+				[Refer]
+				BookBorrowtoLibrarian : Librarian  Association
+			}
+			 Entity Librarian {
+				Id : Integer
+				Username : String
+				Password : String
+				[Refer]
+				LibrariantoBookBorrow : BookBorrow  Association
+			}
+		}
+	}
+	MicroService LibrarianService {
+		ProvidedInterface returnBook{
+			[Operation]
+			returnBook
+		}
+		ProvidedInterface manageBook{
+			[Operation]
+			createBook
+			queryBook
+			updateBook
+			modifyBook
+		}
+		ProvidedInterface manageVerificationCode{
+			[Operation]
+			createVerificationCode
+			queryVerificationCode
+			updateVerificationCode
+			modifyVerificationCode
+		}
+		RequiredInterface manageBookBorrow
+		DomainModel LibrarianService {
+			 Entity VerificationCode {
+				Mailbox : String
+				Code : String
+				[Refer]
+			}
+			@AutoCRUD Entity Book {
+				BookId : Integer
+				Booktitle : String
+				Authors : String
+				BookStatus : Integer
+				[Refer]
+			}
+		}
+	}
+	MicroService LoginService {
+		ProvidedInterface login{
+			[Operation]
+			login
+		}
+		ProvidedInterface register{
+			[Operation]
+			register
+		}
+		ProvidedInterface manageUser{
+			[Operation]
+			createUser
+			queryUser
+			updateUser
+			modifyUser
+		}
+		RequiredInterface manageBookBorrow
+		RequiredInterface manageVerificationCode
+		DomainModel LoginService {
+			@AutoCRUD Entity User {
+				UserId : Integer
+				Username : String
+				Password : String
+				Mailbox : String
+				UserStatus : Integer
+				[Refer]
+			}
+		}
+	}
+}
